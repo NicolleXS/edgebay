@@ -215,7 +215,7 @@ FOOTER = f'''<!-- ================= FOOTER ================= -->
   <div class="footer-bottom">
     <div class="container">
       <span>&copy; {YEAR} Edgebay International. All Rights Reserved.</span>
-      <span><a href="#">Privacy Policy</a><span class="sep">|</span><a href="#">Terms of Service</a></span>
+      <span><a href="privacy-policy.html">Privacy Policy</a><span class="sep">|</span><a href="terms-of-service.html">Terms of Service</a></span>
     </div>
   </div>
 </footer>
@@ -759,6 +759,101 @@ contact += f'''
 
 ''' + FOOTER.replace('</body>', FORM_SCRIPT + '\n</body>')
 open('/root/edgebay/contact.html', 'w').write(contact)
+
+# ----------------------------------------------------------------- legal pages
+def legal_page(fname, h1, title, desc, sections, updated='September 2026'):
+    body = head(title, desc) + header(None) + banner(h1, h1)
+    secs = ''
+    for heading, parts in sections:
+        secs += f'      <h2>{heading}</h2>\n'
+        for p in parts:
+            if isinstance(p, list):
+                secs += '      <ul>\n' + ''.join(f'        <li>{li}</li>\n' for li in p) + '      </ul>\n'
+            else:
+                secs += f'      <p>{p}</p>\n'
+    body += f"""
+<section class="page-section">
+  <div class="container">
+    <div class="legal-content">
+      <p class="updated">Last updated: {updated}</p>
+{secs}      <div class="note">Questions about this document? Contact us at <a href="mailto:{EMAIL}">{EMAIL}</a> or {PHONE}.</div>
+    </div>
+  </div>
+</section>
+
+""" + FOOTER
+    open(f'/root/edgebay/{fname}', 'w').write(body)
+
+
+legal_page('privacy-policy.html', 'Privacy Policy', 'Privacy Policy — Edgebay International',
+    'How Edgebay International collects, uses, and protects your personal information.',
+    [
+     ("Who We Are", [
+        "Edgebay International (\"Edgebay\", \"we\", \"us\") is a licensed auto transport broker based in Atlanta, Georgia (USDOT #3906150, MC #1450201). This Privacy Policy explains what information we collect through our website and services, how we use it, and the choices you have."]),
+     ("Information We Collect", [
+        "We collect information you provide directly to us, for example when you request a quote, contact us by phone, email, or WhatsApp, or book a shipment:",
+        ["Contact details: your name, email address, and phone number.",
+         "Shipment details: vehicle type, year, make and model, pickup and delivery locations, preferred dates, and vehicle condition.",
+         "Communications: the content of messages you send us and notes from our conversations with you."],
+        "We also receive limited technical information automatically when you visit our website, such as your IP address, browser type, pages viewed, and the date and time of your visit, through our hosting provider's standard server logs."]),
+     ("How We Use Your Information", [
+        ["To prepare and send you a quote and respond to your requests.",
+         "To arrange and manage your shipment, including assigning a carrier and keeping you informed of its status.",
+         "To communicate with you about your shipment, our services, and customer support.",
+         "To comply with legal, regulatory, and insurance requirements applicable to auto transport.",
+         "To maintain the security and performance of our website."]]),
+     ("How We Share Information", [
+        "We do not sell your personal information. We share it only as needed to provide our services:",
+        ["With the licensed carrier assigned to your shipment, so they can pick up and deliver your vehicle and contact you about scheduling.",
+         "With service providers who help us operate, such as our website hosting provider and the service that delivers quote-form submissions to our inbox. These providers process data only on our behalf.",
+         "When required by law, regulation, legal process, or to protect the rights, property, or safety of Edgebay, our customers, or others."]]),
+     ("Cookies and Analytics", [
+        "Our website does not currently use advertising cookies. If we add analytics or similar tools in the future, we will update this policy accordingly. You can control cookies through your browser settings."]),
+     ("Data Retention", [
+        "We keep quote requests and shipment records for as long as needed to provide our services and to meet our legal, accounting, and insurance obligations, after which we delete or anonymize them."]),
+     ("Your Choices and Rights", [
+        "You may request access to, correction of, or deletion of the personal information we hold about you by emailing us. You may also opt out of marketing communications at any time. Depending on where you live, you may have additional rights under applicable privacy laws; we will honor valid requests in accordance with those laws."]),
+     ("Security", [
+        "We use reasonable administrative and technical safeguards to protect your information. However, no method of transmission over the internet is completely secure, and we cannot guarantee absolute security."]),
+     ("Children", [
+        "Our services are intended for adults. We do not knowingly collect personal information from children under 18."]),
+     ("Changes to This Policy", [
+        "We may update this Privacy Policy from time to time. The date at the top of the page shows when it was last revised. Continued use of our website or services after a change means you accept the updated policy."]),
+    ])
+
+legal_page('terms-of-service.html', 'Terms of Service', 'Terms of Service — Edgebay International',
+    'The terms and conditions that apply to quotes, bookings, and vehicle transport coordinated by Edgebay International.',
+    [
+     ("Agreement to These Terms", [
+        "These Terms of Service (\"Terms\") govern your use of the Edgebay International website and the vehicle transport brokerage services we provide. By requesting a quote, booking a shipment, or using our website, you agree to these Terms."]),
+     ("Our Role as a Broker", [
+        "Edgebay International is a licensed transportation broker (USDOT #3906150, MC #1450201). We arrange the transport of your vehicle with independent, licensed and insured motor carriers. We do not own trucks or physically transport vehicles ourselves. The carrier assigned to your shipment is responsible for the pickup, transport, and delivery of the vehicle."]),
+     ("Quotes and Booking", [
+        "Quotes are estimates based on the information you provide, including vehicle type, condition, route, and dates. Inaccurate or incomplete information (for example, an inoperable vehicle, modifications, oversized dimensions, or added cargo) may change the price or the equipment required. A booking is confirmed when we send you a booking confirmation, which will state the agreed price, pickup window, and payment terms."]),
+     ("Pickup and Delivery Windows", [
+        "Pickup and delivery dates are estimated windows, not guarantees. Transit times can be affected by weather, traffic, road conditions, mechanical issues, and other circumstances beyond our control. We will keep you informed of any significant changes."]),
+     ("Your Responsibilities", [
+        ["Provide accurate vehicle and shipment information and keep us informed of any changes.",
+         "Have the vehicle ready at the agreed time: accessible, with about a quarter tank of fuel, alarms disabled, and keys available.",
+         "Remove personal belongings and valuables. Personal items left in the vehicle are not covered by carrier insurance and are transported at your own risk.",
+         "Ensure you or an authorized adult (18+) is present at pickup and delivery to inspect the vehicle and sign the Bill of Lading."]]),
+     ("Inspection, Bill of Lading, and Claims", [
+        "At pickup, the carrier inspects the vehicle with you and records its condition on the Bill of Lading. At delivery, inspect the vehicle again before signing. Any new damage must be noted on the Bill of Lading at the time of delivery; damage not noted at delivery may not be eligible for a claim. Claims are handled under the assigned carrier's cargo insurance, and we will assist you in the process."]),
+     ("Insurance", [
+        "Every carrier we assign is required to maintain active cargo and liability insurance, which we verify before confirming the carrier. Coverage applies to the vehicle itself during transit, subject to the carrier's policy terms and exclusions."]),
+     ("Payment", [
+        "Payment amounts, methods, and timing are stated in your booking confirmation. Prices may be adjusted if the shipment details differ materially from what was quoted (for example, a vehicle that is inoperable, larger, or heavier than declared)."]),
+     ("Cancellations and Changes", [
+        "You may cancel or change a booking by contacting us as early as possible. Any applicable cancellation terms, including for cancellations after a carrier has been dispatched, are stated in your booking confirmation."]),
+     ("Limitation of Liability", [
+        "To the fullest extent permitted by law, Edgebay International's liability arising from our brokerage services is limited to the brokerage fees you paid to us for the shipment in question. We are not liable for indirect, incidental, or consequential damages, including loss of use, delays, or lost profits. Nothing in these Terms limits liability that cannot be limited under applicable law."]),
+     ("Website Use", [
+        "The content of this website is provided for general information and is owned by or licensed to Edgebay International. You may not copy, reproduce, or use it for commercial purposes without our written permission."]),
+     ("Governing Law", [
+        "These Terms are governed by the laws of the State of Georgia, USA, and applicable federal transportation regulations, without regard to conflict-of-law principles."]),
+     ("Changes to These Terms", [
+        "We may update these Terms from time to time. The date at the top of the page shows when they were last revised. Continued use of our website or services after a change means you accept the updated Terms."]),
+    ])
 
 # expose pieces for index.html patching
 if __name__ == '__main__':

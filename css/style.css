@@ -1309,6 +1309,18 @@ details.faq-item .faq-body { padding: 0 24px 20px; font-size: 14.5px; color: #4c
 /* TikTok / social */
 .social-row svg { width: 17px; height: 17px; }
 
+
+/* --- Legal pages --- */
+.legal-content { max-width: 840px; margin: 0 auto; }
+.legal-content .updated { font-size: 13.5px; color: #7c8699; margin-bottom: 26px; }
+.legal-content h2 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 21px; color: var(--blue-dark); margin: 34px 0 12px; }
+.legal-content h2:first-of-type { margin-top: 0; }
+.legal-content p { font-size: 15px; color: #4c5a72; margin-bottom: 14px; }
+.legal-content ul { margin: 0 0 16px 22px; }
+.legal-content li { font-size: 15px; color: #4c5a72; margin-bottom: 8px; }
+.legal-content a { color: var(--blue); font-weight: 500; }
+.legal-content .note { background: var(--bg-soft); border-left: 4px solid var(--blue); border-radius: 8px; padding: 14px 18px; font-size: 14px; color: #4c5a72; margin-top: 30px; }
+
 /* ============================================================
    Mobile navigation (hamburger)
    ============================================================ */
