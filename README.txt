@@ -3,27 +3,36 @@ EDGEBAY INTERNATIONAL — WEBSITE
 
 Contents
 --------
-index.html          The homepage
-css/style.css       All styling (colors, layout, responsive rules)
-images/             Hero photo, US route map (SVG), icons, favicon
-                    truck-cutout.jpg is a spare brand asset for future pages
+index.html                 Homepage
+services.html              Services overview
+open-transport.html        Service pages (one per service)
+enclosed-transport.html
+door-to-door.html
+expedited-shipping.html
+motorcycle-transport.html
+boat-transport.html
+rv-motorhome-transport.html
+how-it-works.html, about.html, faq.html, contact.html
+css/style.css              All styling (colors, layout, responsive rules)
+images/                    Hero photo, US route map (SVG), icons, favicon
+images/photos/             Real shipment photos used on the service pages
+build_pages.py             Generator for all pages except index.html
+                           (edit it, run `python3 build_pages.py`)
 
 How to publish
 --------------
-Upload the whole folder to any web host (cPanel public_html, Netlify,
-Vercel, GitHub Pages...). No build step needed — it is plain HTML/CSS.
+The repo is connected to Vercel — every push to `main` redeploys.
+No build step: plain HTML/CSS.
 
 Quote form
 ----------
-The form currently shows a confirmation message on submit but does not
-send data anywhere. To receive submissions, connect it to a service like
-Formspree/Basin or your own endpoint: in index.html, find the
-"quote-form" script block at the bottom and replace it with a POST to
-your endpoint (or add action="https://formspree.io/f/YOUR_ID"
-method="POST" to the <form> tag and delete the script block).
+Both quote forms (homepage + contact) send to office@edgebayintl.com
+through FormSubmit (https://formsubmit.co). IMPORTANT: the very first
+submission triggers a one-time activation email to office@edgebayintl.com —
+click "Activate" in that email, after which every request is delivered.
 
 Editing basics
 --------------
-- Phone number appears in 3 places in index.html (header, CTA, footer).
+- Phone / WhatsApp / email / social links are constants at the top of
+  build_pages.py (and repeated in index.html).
 - Brand colors are defined once at the top of css/style.css (:root).
-- The © year in the footer is at the very bottom of index.html.
