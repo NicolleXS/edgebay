@@ -502,7 +502,7 @@ service_page(
     [("Best For", "Seasonal relocations, out-of-state boat purchases, marina-to-marina moves, and dealer deliveries anywhere in the 50 states."),
      ("Preparation", "Drain fuel to about a quarter tank, remove loose gear and electronics, secure hatches and covers, and note the exact length, beam, and height when requesting a quote."),
      ("Pricing Factors", "Distance, boat dimensions and weight, whether you supply the trailer, and permit needs for oversize loads. We quote it all transparently.")],
-    hero_photo='boat-trailer', hero_alt='Fishing boat on a trailer, ready for pickup at the owner\'s home')
+    hero_photo='boat-yacht-lowboy', hero_alt='Cabin cruiser strapped down on a lowboy trailer, hauled by a semi truck')
 
 service_page(
     'rv-motorhome-transport.html', 'RV &amp; Motorhome Transport', 'RV &amp; Motorhome Transport',
