@@ -250,6 +250,7 @@ FORM_SCRIPT = f'''<script>
       var data = {{}};
       new FormData(form).forEach(function (v, k) {{ data[k] = v; }});
       if (data._honey) return;
+      data.customer_email = data.email || '';
       data._subject = 'New quote request from ' + (data.name || 'website');
       data._template = 'table';
       btn.disabled = true; var label = btn.textContent; btn.textContent = 'Sending...';
