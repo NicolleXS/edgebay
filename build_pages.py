@@ -325,11 +325,10 @@ def other_svcs(exclude):
 def photo_frame(img, alt, badge):
     return f'''    <div class="photo-frame">
       <img src="images/photos/{img}.jpg" alt="{alt}" loading="lazy">
-      <span class="photo-badge">{badge}</span>
     </div>'''
 
 
-def gallery(items, title='On the Road with Edgebay', intro='Real shipments coordinated by our team — no stock photos.'):
+def gallery(items, title='On the Road with Edgebay', intro='A look at the kinds of vehicles our carrier network moves every day.'):
     if not items:
         return ''
     cols = ' cols-2' if len(items) == 2 else ''
@@ -553,7 +552,7 @@ svc += f'''
 </section>
 {gallery([('open-carrier-suv', 'SUVs on an open carrier'), ('enclosed-mclaren', 'McLaren in an enclosed trailer'), ('exotic-lamborghini', 'Lamborghini delivered by flatbed'),
           ('motorcycle-flatbed', 'Motorcycle secured on a flatbed'), ('enclosed-porsche', 'Porsche loaded in an enclosed carrier'), ('exotic-ferrari-red', 'Ferrari on a dedicated flatbed')],
-         title='Recent Shipments', intro='A few of the vehicles our carrier network has moved recently — real photos from real jobs.')}
+         title='Vehicles We Move', intro='From daily drivers to exotics and motorcycles — a few examples of what our carrier network handles.')}
 ''' + CTA_BAND + FOOTER
 open('/root/edgebay/services.html', 'w').write(svc)
 
