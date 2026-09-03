@@ -322,6 +322,14 @@ def other_svcs(exclude):
     </div>'''
 
 
+MAP_FRAME = '''    <div class="photo-frame map-frame">
+      <div class="map-card">
+        <img src="images/us-map.svg" alt="Map of the United States with a transport route from the West Coast to the East Coast">
+        <span class="map-tag">''' + PIN_SVG.format(c='#0642a0', w='2') + ''' Door to door, all 50 states</span>
+      </div>
+    </div>'''
+
+
 def photo_frame(img, alt, badge):
     return f'''    <div class="photo-frame">
       <img src="images/photos/{img}.jpg" alt="{alt}" loading="lazy">
@@ -352,10 +360,15 @@ def gallery(items, title='On the Road with Edgebay', intro='A look at the kinds 
 
 
 def service_page(fname, nav_title, h1, title, desc, icon, intro_h2, paras, checklist, cards,
-                 hero_photo=None, hero_alt='', hero_badge='Real Edgebay shipment', gal=None):
+                 hero_photo=None, hero_alt='', hero_badge='Real Edgebay shipment', gal=None, map_visual=False):
     body = head(title, desc) + header('services') + banner(h1, f'<a href="services.html">Services</a><span class="sep">/</span>{nav_title}')
     paras_html = '\n'.join(f'      <p class="content-p">{p}</p>' for p in paras)
-    visual = photo_frame(hero_photo, hero_alt, hero_badge) if hero_photo else f'    <div class="illus-panel"><div class="big-icon">{icon}</div></div>'
+    if map_visual:
+        visual = MAP_FRAME
+    elif hero_photo:
+        visual = photo_frame(hero_photo, hero_alt, hero_badge)
+    else:
+        visual = f'    <div class="illus-panel"><div class="big-icon">{icon}</div></div>'
     body += f'''
 <section class="page-section">
   <div class="container two-col">
@@ -434,10 +447,9 @@ service_page(
     [("Best For", "Anyone who values convenience — busy relocations, remote purchases, snowbird moves, and corporate transfers."),
      ("Access Considerations", "Low-hanging trees, gated communities, or tight streets may require meeting the driver nearby. We confirm all details before pickup day."),
      ("Preparation", "Have your vehicle accessible, keys ready, and about a quarter tank of fuel. You or a representative sign the inspection report at both ends.")],
-    hero_photo='exotic-lamborghini', hero_alt='Lamborghini being delivered on a flatbed directly at the destination',
-    gal=[('exotic-ferrari-red', 'Ferrari picked up on a flatbed at a residential address'),
-         ('open-carrier-mercedes', 'Multi-car delivery on an open carrier'),
-         ('motorcycle-highway', 'Motorcycle en route to its owner on a flatbed')])
+    map_visual=True,
+    gal=[('exotic-lamborghini', 'Lamborghini delivered by flatbed right at the destination'), ('exotic-ferrari-red', 'Ferrari picked up on a flatbed at a residential address'),
+         ('open-carrier-mercedes', 'Multi-car delivery on an open carrier')])
 
 service_page(
     'expedited-shipping.html', 'Expedited Shipping', 'Expedited Shipping',
@@ -489,7 +501,8 @@ service_page(
      "Cargo insurance coverage throughout transit"],
     [("Best For", "Seasonal relocations, out-of-state boat purchases, marina-to-marina moves, and dealer deliveries anywhere in the 50 states."),
      ("Preparation", "Drain fuel to about a quarter tank, remove loose gear and electronics, secure hatches and covers, and note the exact length, beam, and height when requesting a quote."),
-     ("Pricing Factors", "Distance, boat dimensions and weight, whether you supply the trailer, and permit needs for oversize loads. We quote it all transparently.")])
+     ("Pricing Factors", "Distance, boat dimensions and weight, whether you supply the trailer, and permit needs for oversize loads. We quote it all transparently.")],
+    hero_photo='boat-trailer', hero_alt='Fishing boat on a trailer, ready for pickup at the owner\'s home')
 
 service_page(
     'rv-motorhome-transport.html', 'RV &amp; Motorhome Transport', 'RV &amp; Motorhome Transport',

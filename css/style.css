@@ -1219,6 +1219,43 @@ details.faq-item .faq-body { padding: 0 24px 20px; font-size: 14.5px; color: #4c
   box-shadow: 0 0 0 3px rgba(30, 179, 86, 0.18);
 }
 
+
+.photo-frame.map-frame .map-card {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 4 / 3;
+  border-radius: 18px;
+  border: 6px solid #fff;
+  background: linear-gradient(150deg, #ffffff 0%, #edf2fb 100%);
+  box-shadow: 0 22px 50px rgba(23, 43, 96, 0.20);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 26px 22px;
+  overflow: hidden;
+}
+
+.photo-frame.map-frame .map-card img { width: 100%; height: auto; }
+
+.photo-frame.map-frame .map-tag {
+  position: absolute;
+  z-index: 3;
+  top: 16px; left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--blue-dark);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 12.5px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(23, 43, 96, 0.14);
+}
+
+.photo-frame.map-frame .map-tag svg { width: 16px; height: 16px; }
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
