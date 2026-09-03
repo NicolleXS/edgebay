@@ -505,7 +505,8 @@ service_page(
      "Door-to-door, dealer, and campground deliveries"],
     [("Best For", "Snowbird seasonal moves, RV purchases from out of state, dealer transfers, and relocations where you'd rather not drive the rig yourself."),
      ("Preparation", "Secure all interior items, empty tanks, retract slides and awnings, disconnect propane, and document the exterior with photos before pickup."),
-     ("Pricing Factors", "Distance, RV length and height, whether it's drivable or needs to be towed, and any permit requirements for oversize dimensions.")])
+     ("Pricing Factors", "Distance, RV length and height, whether it's drivable or needs to be towed, and any permit requirements for oversize dimensions.")],
+    hero_photo='rv-hymer-flatbed', hero_alt='Hymer motorhome loaded on a flatbed carrier for transport', hero_badge='Motorhome on a flatbed carrier')
 
 # ----------------------------------------------------------------- services overview
 tiles = [
