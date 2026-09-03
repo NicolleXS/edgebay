@@ -8,7 +8,7 @@ WA = "https://wa.me/17276549418?text=Hi%20Edgebay%2C%20I%27d%20like%20a%20quote%
 EMAIL = "office@edgebayintl.com"
 FB = "https://www.facebook.com/profile.php?id=61573226470889"
 IG = "https://www.instagram.com/edgebay.intl"
-TT = "https://www.tiktok.com/@edgebay.internati"
+TT = "https://www.tiktok.com/@edgebayintl"
 YEAR = "2026"
 
 BADGE = '''<svg class="logo-badge" viewBox="0 0 54 62" fill="none" xmlns="http://www.w3.org/2000/svg">
