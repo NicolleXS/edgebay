@@ -24,6 +24,12 @@ How to publish
 The repo is connected to Vercel — every push to `main` redeploys.
 No build step: plain HTML/CSS.
 
+URLs are extension-less (/services, /contact, and / for home) thanks to
+vercel.json ("cleanUrls": true). Vercel redirects /services.html to
+/services automatically, so any old link keeps working. Internal links
+and asset paths are root-relative (/css/..., /images/...) — keep them
+that way when editing; build_pages.py rewrites them automatically.
+
 Quote form
 ----------
 Both quote forms (homepage + contact) send to office@edgebayintl.com

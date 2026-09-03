@@ -855,8 +855,33 @@ legal_page('terms-of-service.html', 'Terms of Service', 'Terms of Service — Ed
         "We may update these Terms from time to time. The date at the top of the page shows when they were last revised. Continued use of our website or services after a change means you accept the updated Terms."]),
     ])
 
+
+# ----------------------------------------------------------------- clean URLs
+def clean_links():
+    """Rewrite internal links to extension-less, root-relative URLs (/services,
+    / for home). Vercel serves them via cleanUrls in vercel.json."""
+    import os, re
+    pattern = re.compile(r'href="([a-z0-9-]+)\.html(#[^"]*)?"')
+    assets = re.compile(r'(href|src)="(css/|images/)')
+
+    def repl(m):
+        page, frag = m.group(1), m.group(2) or ''
+        return f'href="/{frag[1:] and ""}"' .replace('""', '"') if False else (
+            f'href="/{frag}"' if page == 'index' else f'href="/{page}{frag}"')
+
+    for f in sorted(os.listdir('/root/edgebay')):
+        if not f.endswith('.html'):
+            continue
+        p = f'/root/edgebay/{f}'
+        c = open(p).read()
+        c2 = assets.sub(r'\1="/\2', pattern.sub(repl, c))
+        if c2 != c:
+            open(p, 'w').write(c2)
+
+
 # expose pieces for index.html patching
 if __name__ == '__main__':
+    clean_links()
     open('/root/edgebay/_form_script.html', 'w').write(FORM_SCRIPT)
     open('/root/edgebay/_quote_form.html', 'w').write(quote_form())
     print("generated pages")
