@@ -209,7 +209,6 @@ FOOTER = f'''<!-- ================= FOOTER ================= -->
         <a href="{IG}" target="_blank" rel="noopener" aria-label="Instagram">{IG_SVG}</a>
         <a href="{TT}" target="_blank" rel="noopener" aria-label="TikTok">{TT_SVG}</a>
       </div>
-      <p class="footer-reg">DOT #3906150<br>MC #1450201</p>
     </div>
   </div>
   <div class="footer-bottom">
