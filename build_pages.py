@@ -11,6 +11,7 @@ IG = "https://www.instagram.com/edgebay.intl"
 TT = "https://www.tiktok.com/@edgebayintl"
 YEAR = "2026"
 SITE = "https://edgebay.vercel.app"
+FORM_ID = "3b673ecd1a4559d5bd2236870bc46c29"  # FormSubmit endpoint for office@edgebayintl.com
 
 BADGE = '''<svg class="logo-badge" viewBox="0 0 54 62" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="1.5" y="1.5" width="51" height="59" rx="5" stroke="#0642a0" stroke-width="2.6"/>
@@ -263,7 +264,7 @@ FORM_SCRIPT = f'''<script>
       btn.textContent = 'Sending...';
       ok.hidden = true; err.hidden = true;
 
-      fetch('https://formsubmit.co/ajax/{EMAIL}', {{
+      fetch('https://formsubmit.co/ajax/{FORM_ID}', {{
         method: 'POST',
         headers: {{ 'Content-Type': 'application/json', 'Accept': 'application/json' }},
         body: JSON.stringify(data)
@@ -291,7 +292,7 @@ FORM_SCRIPT = f'''<script>
 
 def quote_form():
     return f'''      <form id="quote-form" class="form-grid" autocomplete="on"
-            action="https://formsubmit.co/{EMAIL}" method="POST">
+            action="https://formsubmit.co/{FORM_ID}" method="POST">
         <div class="field"><input type="text" name="name" placeholder="Full Name" required></div>
         <div class="field"><input type="email" name="email" placeholder="Email Address" required></div>
         <div class="field"><input type="tel" name="phone" placeholder="Phone Number" required></div>
