@@ -33,9 +33,19 @@ that way when editing; build_pages.py rewrites them automatically.
 Quote form
 ----------
 Both quote forms (homepage + contact) send to office@edgebayintl.com
-through FormSubmit (https://formsubmit.co). IMPORTANT: the very first
-submission triggers a one-time activation email to office@edgebayintl.com —
-click "Activate" in that email, after which every request is delivered.
+through FormSubmit (https://formsubmit.co).
+
+The form tries a background (AJAX) submission first, which keeps the
+visitor on the page and shows an inline confirmation. If that call is
+refused — which is what happens while the address is not activated yet,
+and also if a browser blocks the request — it automatically falls back to
+a normal form POST, so a request is never lost. After a normal POST the
+visitor lands on /thank-you.
+
+ACTIVATION (one time only): submit the form once on the live site. The
+browser will land on a FormSubmit page and an activation email goes to
+office@edgebayintl.com — click "Activate" there. From then on every
+request is delivered, and submissions stay on-page via AJAX.
 
 Editing basics
 --------------

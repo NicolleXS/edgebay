@@ -1319,6 +1319,8 @@ details.faq-item .faq-body { padding: 0 24px 20px; font-size: 14.5px; color: #4c
 .legal-content ul { margin: 0 0 16px 22px; }
 .legal-content li { font-size: 15px; color: #4c5a72; margin-bottom: 8px; }
 .legal-content a { color: var(--blue); font-weight: 500; }
+.legal-content a.btn-blue, .legal-content a.btn-red { color: #fff; }
+.legal-content a.btn-outline:hover { color: #fff; }
 .legal-content .note { background: var(--bg-soft); border-left: 4px solid var(--blue); border-radius: 8px; padding: 14px 18px; font-size: 14px; color: #4c5a72; margin-top: 30px; }
 
 /* ============================================================

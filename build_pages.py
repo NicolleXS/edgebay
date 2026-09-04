@@ -10,6 +10,7 @@ FB = "https://www.facebook.com/profile.php?id=61573226470889"
 IG = "https://www.instagram.com/edgebay.intl"
 TT = "https://www.tiktok.com/@edgebayintl"
 YEAR = "2026"
+SITE = "https://edgebay.vercel.app"
 
 BADGE = '''<svg class="logo-badge" viewBox="0 0 54 62" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="1.5" y="1.5" width="51" height="59" rx="5" stroke="#0642a0" stroke-width="2.6"/>
@@ -244,34 +245,53 @@ FORM_SCRIPT = f'''<script>
     var btn = form.querySelector('.btn-submit');
     var ok = document.getElementById('form-success');
     var err = document.getElementById('form-error');
+
     form.addEventListener('submit', function (e) {{
       e.preventDefault();
+      if (!form.checkValidity()) {{ form.reportValidity(); return; }}
+
+      var emailField = form.querySelector('[name="email"]');
+      var mirror = form.querySelector('[name="customer_email"]');
+      if (emailField && mirror) mirror.value = emailField.value;
+
       var data = {{}};
       new FormData(form).forEach(function (v, k) {{ data[k] = v; }});
       if (data._honey) return;
-      data.customer_email = data.email || '';
-      data._subject = 'New quote request from ' + (data.name || 'website');
-      data._template = 'table';
-      btn.disabled = true; var label = btn.textContent; btn.textContent = 'Sending...';
+
+      btn.disabled = true;
+      var label = btn.textContent;
+      btn.textContent = 'Sending...';
       ok.hidden = true; err.hidden = true;
+
       fetch('https://formsubmit.co/ajax/{EMAIL}', {{
         method: 'POST',
         headers: {{ 'Content-Type': 'application/json', 'Accept': 'application/json' }},
         body: JSON.stringify(data)
-      }}).then(function (r) {{ return r.json().then(function (j) {{ return {{ okStatus: r.ok, body: j }}; }}); }})
+      }})
+        .then(function (r) {{ return r.json().then(function (j) {{ return {{ okStatus: r.ok, body: j }}; }}); }})
         .then(function (res) {{
           if (res.okStatus && (res.body.success === 'true' || res.body.success === true)) {{
-            ok.hidden = false; form.reset(); btn.textContent = 'Request Sent \\u2713';
-          }} else {{ throw new Error('bad'); }}
+            ok.hidden = false;
+            form.reset();
+            btn.textContent = 'Request Sent \\u2713';
+          }} else {{
+            throw new Error('ajax-rejected');
+          }}
         }})
-        .catch(function () {{ err.hidden = false; btn.disabled = false; btn.textContent = label; }});
+        .catch(function () {{
+          /* AJAX blocked or the address is not activated yet:
+             fall back to a normal POST so the request always goes through. */
+          btn.textContent = 'Sending...';
+          HTMLFormElement.prototype.submit.call(form);
+        }});
     }});
   }})();
 </script>'''
 
 
 def quote_form():
-    return f'''      <form id="quote-form" class="form-grid" autocomplete="on">
+    return f'''      <form id="quote-form" class="form-grid" autocomplete="on"
+            action="https://formsubmit.co/{EMAIL}" method="POST">
         <div class="field"><input type="text" name="name" placeholder="Full Name" required></div>
         <div class="field"><input type="email" name="email" placeholder="Email Address" required></div>
         <div class="field"><input type="tel" name="phone" placeholder="Phone Number" required></div>
@@ -289,6 +309,11 @@ def quote_form():
           <input type="text" name="date" placeholder="Preferred Pick Up Date" onfocus="this.type='date'" onblur="if(!this.value)this.type='text'">
           <span class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
         </div>
+        <input type="hidden" name="_subject" value="New quote request from the Edgebay website">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="{SITE}/thank-you">
+        <input type="hidden" name="customer_email" value="">
         <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
         <button type="submit" class="btn-submit full">Get My Free Quote</button>
         <p class="secure-note full">
@@ -854,6 +879,38 @@ legal_page('terms-of-service.html', 'Terms of Service', 'Terms of Service — Ed
      ("Changes to These Terms", [
         "We may update these Terms from time to time. The date at the top of the page shows when they were last revised. Continued use of our website or services after a change means you accept the updated Terms."]),
     ])
+
+
+# ----------------------------------------------------------------- thank you
+thanks = head('Thank You — Edgebay International',
+              'Your quote request has been received. The Edgebay International team will get back to you shortly.')
+thanks += header(None) + banner('Thank You', 'Thank You')
+thanks += f"""
+<section class="page-section">
+  <div class="container">
+    <div class="legal-content" style="text-align:center;">
+      <div class="service-icon" style="margin:0 auto 22px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+      </div>
+      <h2 class="content-h2">Your request has been received</h2>
+      <p class="content-p" style="max-width:560px;margin-left:auto;margin-right:auto;">
+        Thanks for reaching out to Edgebay International. A member of our team will review your details
+        and get back to you with a quote shortly, Monday to Friday, 9AM–6PM EST.
+      </p>
+      <p class="content-p" style="max-width:560px;margin-left:auto;margin-right:auto;">
+        Need to talk sooner? Call us at <a href="{TEL}">{PHONE}</a> or
+        <a href="{WA}" target="_blank" rel="noopener">message us on WhatsApp</a>.
+      </p>
+      <div class="cta-band-actions" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px;">
+        <a href="index.html" class="btn btn-blue">Back to Home</a>
+        <a href="services.html" class="btn btn-outline">Our Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+""" + FOOTER
+open('/root/edgebay/thank-you.html', 'w').write(thanks)
 
 
 # ----------------------------------------------------------------- clean URLs
