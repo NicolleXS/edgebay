@@ -47,6 +47,16 @@ a hidden "botcheck" checkbox filters bots. The redirect value is rewritten
 in the browser to the current origin, so the site works unchanged on the
 vercel.app address and on the official domain.
 
+The notification email is shaped from the form itself:
+- field NAMES are the labels Web3Forms prints, so they read as "Phone",
+  "Vehicle", "Pickup", "Delivery", "Preferred date". Keep "name" and
+  "email" lowercase — Web3Forms uses them for the sender name and the
+  Reply-To header, so hitting Reply answers the customer.
+- the subject is rewritten on submit to
+  "Quote request — <name> — <pickup> → <delivery>", which makes the
+  inbox list readable without opening anything.
+- "Sent from" records which page the request came from.
+
 Moving to the official domain: nothing in the form needs editing. Check
 the Web3Forms dashboard only if a domain restriction was set there — add
 the new domain to the allowed list before switching.
