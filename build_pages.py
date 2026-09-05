@@ -11,7 +11,7 @@ IG = "https://www.instagram.com/edgebay.intl"
 TT = "https://www.tiktok.com/@edgebayintl"
 YEAR = "2026"
 SITE = "https://edgebay.vercel.app"
-FORM_ID = "3b673ecd1a4559d5bd2236870bc46c29"  # FormSubmit endpoint for office@edgebayintl.com
+WEB3FORMS_KEY = "71df5154-5feb-443c-ae07-0295153b6a6c"  # Web3Forms key for office@edgebayintl.com
 
 BADGE = '''<svg class="logo-badge" viewBox="0 0 54 62" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="1.5" y="1.5" width="51" height="59" rx="5" stroke="#0642a0" stroke-width="2.6"/>
@@ -239,27 +239,26 @@ FOOTER = f'''<!-- ================= FOOTER ================= -->
 </html>
 '''
 
-FORM_SCRIPT = f'''<script>
-  (function () {{
+FORM_SCRIPT = '''<script>
+  (function () {
     var form = document.getElementById('quote-form');
     if (!form) return;
     var btn = form.querySelector('.btn-submit');
-
-    form.addEventListener('submit', function () {{
-      var emailField = form.querySelector('[name="email"]');
-      var mirror = form.querySelector('[name="customer_email"]');
-      if (emailField && mirror) mirror.value = emailField.value;
+    form.addEventListener('submit', function () {
       btn.disabled = true;
       btn.textContent = 'Sending...';
-      /* let the browser post the form to FormSubmit, which redirects to /thank-you */
-    }});
-  }})();
+    });
+  })();
 </script>'''
 
 
 def quote_form():
-    return f'''      <form id="quote-form" class="form-grid" autocomplete="on"
-            action="https://formsubmit.co/{FORM_ID}" method="POST">
+    return f"""      <form id="quote-form" class="form-grid" autocomplete="on"
+            action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="{WEB3FORMS_KEY}">
+        <input type="hidden" name="subject" value="New quote request from the Edgebay website">
+        <input type="hidden" name="from_name" value="Edgebay International website">
+        <input type="hidden" name="redirect" value="{SITE}/thank-you">
         <div class="field"><input type="text" name="name" placeholder="Full Name" required></div>
         <div class="field"><input type="email" name="email" placeholder="Email Address" required></div>
         <div class="field"><input type="tel" name="phone" placeholder="Phone Number" required></div>
@@ -271,23 +270,19 @@ def quote_form():
           </select>
           <span class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
         </div>
-        <div class="field"><input type="text" name="pickup" placeholder="Pick Up Location" required></div>
-        <div class="field"><input type="text" name="delivery" placeholder="Delivery Location" required></div>
+        <div class="field"><input type="text" name="pickup_location" placeholder="Pick Up Location" required></div>
+        <div class="field"><input type="text" name="delivery_location" placeholder="Delivery Location" required></div>
         <div class="field full">
-          <input type="text" name="date" placeholder="Preferred Pick Up Date" onfocus="this.type='date'" onblur="if(!this.value)this.type='text'">
+          <input type="text" name="preferred_date" placeholder="Preferred Pick Up Date" onfocus="this.type='date'" onblur="if(!this.value)this.type='text'">
           <span class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
         </div>
-        <input type="hidden" name="_subject" value="New quote request from the Edgebay website">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="{SITE}/thank-you">
-        <input type="hidden" name="customer_email" value="">
+        <label style="display:none;" aria-hidden="true"><input type="checkbox" name="botcheck" tabindex="-1"></label>
         <button type="submit" class="btn-submit full">Get My Free Quote</button>
         <p class="secure-note full">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           Your information is secure and will never be shared.
         </p>
-      </form>'''
+      </form>"""
 
 
 def checks(items):

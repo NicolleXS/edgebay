@@ -32,25 +32,22 @@ that way when editing; build_pages.py rewrites them automatically.
 
 Quote form
 ----------
-Both quote forms (homepage + contact) send to office@edgebayintl.com
-through FormSubmit (https://formsubmit.co).
+Both quote forms (homepage + contact) post to Web3Forms, which delivers
+to office@edgebayintl.com:
 
-The form does a plain POST to FormSubmit (their documented flow) and the
-visitor lands on /thank-you afterwards. An earlier AJAX version was
-dropped: it kept the visitor on the page but made delivery failures
-invisible, which is the wrong trade for a lead form.
+  action="https://api.web3forms.com/submit"
+  access_key = 71df5154-5feb-443c-ae07-0295153b6a6c
 
-The form posts to FormSubmit's endpoint id
-3b673ecd1a4559d5bd2236870bc46c29, which is tied to office@edgebayintl.com.
-Using the id instead of the address keeps the mailbox out of the page
-source, away from spam harvesters. To change the destination address,
-create a new endpoint on formsubmit.co and replace FORM_ID in
-build_pages.py (and in index.html).
+The key is public by design (it lives in the page source) and only says
+where the message goes. Change the destination address at web3forms.com
+and replace WEB3FORMS_KEY in build_pages.py (and in index.html).
 
-The endpoint was activated on 4 Sep 2026. If submissions ever stop
-arriving, check the spam folder first — FormSubmit sends from its own
-servers with the visitor's address as Reply-To, which some filters
-dislike. Adding formsubmit.co to the mailbox's allow list fixes it.
+A "redirect" field sends the visitor to /thank-you after submitting, and
+a hidden "botcheck" checkbox filters bots.
+
+FormSubmit was used first and dropped: it accepted the submissions but
+never delivered them, most likely because it sends with the visitor's
+address as the sender, which fails SPF/DMARC at the receiving server.
 
 Editing basics
 --------------
