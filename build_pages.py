@@ -243,6 +243,14 @@ FORM_SCRIPT = '''<script>
   (function () {
     var form = document.getElementById('quote-form');
     if (!form) return;
+
+    /* Point the post-submit redirect at whatever domain the site is served
+       from, so moving to the official domain needs no code change. */
+    var redirect = form.querySelector('[name="redirect"]');
+    if (redirect && location.protocol.indexOf('http') === 0) {
+      redirect.value = location.origin + '/thank-you';
+    }
+
     var btn = form.querySelector('.btn-submit');
     form.addEventListener('submit', function () {
       btn.disabled = true;

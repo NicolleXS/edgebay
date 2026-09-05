@@ -43,7 +43,13 @@ where the message goes. Change the destination address at web3forms.com
 and replace WEB3FORMS_KEY in build_pages.py (and in index.html).
 
 A "redirect" field sends the visitor to /thank-you after submitting, and
-a hidden "botcheck" checkbox filters bots.
+a hidden "botcheck" checkbox filters bots. The redirect value is rewritten
+in the browser to the current origin, so the site works unchanged on the
+vercel.app address and on the official domain.
+
+Moving to the official domain: nothing in the form needs editing. Check
+the Web3Forms dashboard only if a domain restriction was set there — add
+the new domain to the allowed list before switching.
 
 FormSubmit was used first and dropped: it accepted the submissions but
 never delivered them, most likely because it sends with the visitor's
