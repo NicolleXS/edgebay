@@ -35,12 +35,10 @@ Quote form
 Both quote forms (homepage + contact) send to office@edgebayintl.com
 through FormSubmit (https://formsubmit.co).
 
-The form tries a background (AJAX) submission first, which keeps the
-visitor on the page and shows an inline confirmation. If that call is
-refused — which is what happens while the address is not activated yet,
-and also if a browser blocks the request — it automatically falls back to
-a normal form POST, so a request is never lost. After a normal POST the
-visitor lands on /thank-you.
+The form does a plain POST to FormSubmit (their documented flow) and the
+visitor lands on /thank-you afterwards. An earlier AJAX version was
+dropped: it kept the visitor on the page but made delivery failures
+invisible, which is the wrong trade for a lead form.
 
 The form posts to FormSubmit's endpoint id
 3b673ecd1a4559d5bd2236870bc46c29, which is tied to office@edgebayintl.com.
@@ -49,11 +47,10 @@ source, away from spam harvesters. To change the destination address,
 create a new endpoint on formsubmit.co and replace FORM_ID in
 build_pages.py (and in index.html).
 
-ACTIVATION (one time only): submit the form once on the live site, then
-click "Activate Form" in the email FormSubmit sends to
-office@edgebayintl.com. If that link reports "Not a valid link", it has
-usually already been consumed — just submit the form again and check
-whether the request arrives.
+The endpoint was activated on 4 Sep 2026. If submissions ever stop
+arriving, check the spam folder first — FormSubmit sends from its own
+servers with the visitor's address as Reply-To, which some filters
+dislike. Adding formsubmit.co to the mailbox's allow list fixes it.
 
 Editing basics
 --------------

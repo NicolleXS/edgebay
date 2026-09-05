@@ -244,47 +244,14 @@ FORM_SCRIPT = f'''<script>
     var form = document.getElementById('quote-form');
     if (!form) return;
     var btn = form.querySelector('.btn-submit');
-    var ok = document.getElementById('form-success');
-    var err = document.getElementById('form-error');
 
-    form.addEventListener('submit', function (e) {{
-      e.preventDefault();
-      if (!form.checkValidity()) {{ form.reportValidity(); return; }}
-
+    form.addEventListener('submit', function () {{
       var emailField = form.querySelector('[name="email"]');
       var mirror = form.querySelector('[name="customer_email"]');
       if (emailField && mirror) mirror.value = emailField.value;
-
-      var data = {{}};
-      new FormData(form).forEach(function (v, k) {{ data[k] = v; }});
-      if (data._honey) return;
-
       btn.disabled = true;
-      var label = btn.textContent;
       btn.textContent = 'Sending...';
-      ok.hidden = true; err.hidden = true;
-
-      fetch('https://formsubmit.co/ajax/{FORM_ID}', {{
-        method: 'POST',
-        headers: {{ 'Content-Type': 'application/json', 'Accept': 'application/json' }},
-        body: JSON.stringify(data)
-      }})
-        .then(function (r) {{ return r.json().then(function (j) {{ return {{ okStatus: r.ok, body: j }}; }}); }})
-        .then(function (res) {{
-          if (res.okStatus && (res.body.success === 'true' || res.body.success === true)) {{
-            ok.hidden = false;
-            form.reset();
-            btn.textContent = 'Request Sent \\u2713';
-          }} else {{
-            throw new Error('ajax-rejected');
-          }}
-        }})
-        .catch(function () {{
-          /* AJAX blocked or the address is not activated yet:
-             fall back to a normal POST so the request always goes through. */
-          btn.textContent = 'Sending...';
-          HTMLFormElement.prototype.submit.call(form);
-        }});
+      /* let the browser post the form to FormSubmit, which redirects to /thank-you */
     }});
   }})();
 </script>'''
@@ -315,14 +282,11 @@ def quote_form():
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="{SITE}/thank-you">
         <input type="hidden" name="customer_email" value="">
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
         <button type="submit" class="btn-submit full">Get My Free Quote</button>
         <p class="secure-note full">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           Your information is secure and will never be shared.
         </p>
-        <p class="secure-note full" id="form-success" hidden style="color:#1a7f37;font-weight:500;">Thank you! Your quote request has been received — we'll get back to you shortly.</p>
-        <p class="secure-note full" id="form-error" hidden style="color:#b42318;font-weight:500;">Something went wrong. Please call us at {PHONE} or email {EMAIL}.</p>
       </form>'''
 
 
